@@ -1,4 +1,3 @@
-import Disk from '../domain/disk';
 import Player from '../domain/player';
 import { Board } from '../features/board/boardSlice';
 
@@ -15,16 +14,17 @@ const lines = [
 
 export const calculateNextPlayer = (currentPlayer: Player, board: Board, players: [Player, Player]): Player|null => {
   const [playerA, playerB] = players;
-  if (calculateWinner(board.disks, players)) {
+  if (calculateWinner(board, players)) {
     return null;
   }
   if (!board.disks.includes(null)) {
     return null;
   }
-  return currentPlayer === playerA ? playerB : playerA;
+  return currentPlayer.disk === playerA.disk ? playerB : playerA;
 };
 
-export const calculateWinner = (disks: (Disk|null)[], players: [Player, Player]): Player|null => {
+export const calculateWinner = (board: Board, players: [Player, Player]): Player|null => {
+  const { disks } = board;
   const [playerA, playerB] = players;
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];

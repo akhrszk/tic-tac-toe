@@ -34,19 +34,19 @@ describe("src/core/game calculateNextPlayer tests", () => {
   it("Next Player when NOT finished game", () => {
     const disks: (Disk|null)[] = convertDisks(initialBoard);
     disks[1] = playerA.disk;
-    const board: Board = { disks: disks };
+    const board: Board = { disks };
     expect(calculateNextPlayer(playerA, board, players)).toBe(playerB);
   });
 
   it("Next Player is null when decided game", () => {
     const disks: (Disk|null)[] = convertDisks(whiteWonBoard);
-    const board: Board = { disks: disks };
+    const board: Board = { disks };
     expect(calculateNextPlayer(playerA, board, players)).toBeNull();
   });
 
   it("Next Player is null when draw", () => {
     const disks: (Disk|null)[] = convertDisks(drawBoard);
-    const board: Board = { disks: disks };
+    const board: Board = { disks };
     expect(calculateNextPlayer(playerB, board, players)).toBeNull();
   });
 });
@@ -55,16 +55,19 @@ describe("src/core/game calculateWinner tests", () => {
 
   it("Non Winner when NOT finished game", () => {
     const disks: (Disk|null)[] = convertDisks(initialBoard);
-    expect(calculateWinner(disks, players)).toBeNull();
+    const board: Board = { disks };
+    expect(calculateWinner(board, players)).toBeNull();
   });
 
   it("Winner when WHITE WON game", () => {
     const disks: (Disk|null)[] = convertDisks(whiteWonBoard);
-    expect(calculateWinner(disks, players)).toBe(playerA);
+    const board: Board = { disks };
+    expect(calculateWinner(board, players)).toBe(playerA);
   });
 
   it("Non Winner when DRAW game", () => {
     const disks: (Disk|null)[] = convertDisks(drawBoard);
-    expect(calculateWinner(disks, players)).toBeNull();
+    const board: Board = { disks };
+    expect(calculateWinner(board, players)).toBeNull();
   });
 });
