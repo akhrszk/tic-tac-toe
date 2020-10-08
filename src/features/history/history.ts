@@ -7,6 +7,7 @@ export interface History {
 }
 
 export interface Move {
+  readonly step: number;
   readonly player: Player;
   readonly position: number;
 }
