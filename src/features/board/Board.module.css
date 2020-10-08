@@ -1,0 +1,21 @@
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 56px;
+  font-weight: bold;
+  line-height: 64px;
+  height: 64px;
+  width: 64px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+}
