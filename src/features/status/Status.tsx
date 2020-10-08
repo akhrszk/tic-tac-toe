@@ -2,16 +2,18 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectNextPlayer, selectWinner } from './statusSlice';
 
+import styles from './Status.module.css';
+
 const Status: React.FC = () => {
   const nextPlayer = useSelector(selectNextPlayer);
   const winner = useSelector(selectWinner);
 
   if (nextPlayer) {
-    return (<div>Next: {nextPlayer.disk}</div>);
+    return (<div className={styles.status}>Next: {nextPlayer.disk}</div>);
   } else if (winner) {
-    return (<div>{winner.disk} won</div>);
+    return (<div className={styles.status}>{winner.disk} won</div>);
   } else {
-    return (<div>Draw game.</div>);
+    return (<div className={styles.status}>Draw game.</div>);
   }
 };
 

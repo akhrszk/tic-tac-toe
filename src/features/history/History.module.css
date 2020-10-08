@@ -1,0 +1,16 @@
+
+.list {
+  margin: 10px;
+}
+
+.move {
+  background: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: medium;
+}
+
+.selected {
+  font-weight: bold;
+}

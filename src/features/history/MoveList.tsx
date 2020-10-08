@@ -1,10 +1,13 @@
 import React from 'react';
+import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectHistory } from './historySlice';
 import { showBoard } from '../board/boardSlice';
 import { Board, initialBoard } from '../board/board';
 import { Move } from './history';
 import { selectFocusedMoveStep, selectMoveStep } from '../status/statusSlice';
+
+import styles from './History.module.css';
 
 const MoveList: React.FC = () => {
   const history = useSelector(selectHistory);
@@ -17,10 +20,12 @@ const MoveList: React.FC = () => {
   };
 
   const renderStart = () => (
-    <li key={'#0'}>
+    <li key={'#0'} className={styles.list}>
       <button
+        className={
+          classNames(styles.move, { [styles.selected]: focusedMoveStep === 0 })
+        }
         onClick={() => onClick(0, initialBoard())}
-        disabled={focusedMoveStep === 0}
       >
         {'Go to game start'}
       </button>
@@ -28,10 +33,12 @@ const MoveList: React.FC = () => {
   );
 
   const renderMove = (move: Move, board: Board) => (
-    <li key={`#${move.step}`}>
+    <li key={`#${move.step}`} className={styles.list}>
       <button
+        className={
+          classNames(styles.move, { [styles.selected]: move.step === focusedMoveStep })
+        }
         onClick={() => onClick(move.step, board)}
-        disabled={move.step === focusedMoveStep}
       >
         {`Go to move #${move.step}`}
       </button>
