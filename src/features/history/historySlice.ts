@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { History, Move } from "./history";
 import { initialBoard, Board } from "../board/board";
+import { canPutDisk, putDisk } from "../../core/game";
 
 const initialState: History[] = [];
 
@@ -11,12 +12,12 @@ export const historySlice = createSlice({
   reducers: {
     addHistory: (state, action: PayloadAction<Move>) => {
       const move = action.payload;
-      const board: Board = state.length ?
-        { disks: state.slice(-1)[0].board.disks.slice() } : initialBoard();
-      if (board.disks[move.position]) {
+      let board: Board = state.length ?
+        state.slice(-1)[0].board : initialBoard();
+      if (!canPutDisk(board, move.position)) {
         return;
       }
-      board.disks[move.position] = move.player.disk;
+      board = putDisk(board, move.player.disk, move.position);
       state.push({ board, move });
     }
   }

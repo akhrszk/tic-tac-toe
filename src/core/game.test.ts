@@ -1,5 +1,10 @@
-import { calculateNextPlayer, calculateWinner } from './game'
-import Player from '../domain/player'
+import {
+  calculateNextPlayer,
+  calculateWinner,
+  canPutDisk,
+  putDisk 
+} from './game';
+import Player from '../domain/player';
 import Disk from '../domain/disk';
 import { Board } from '../features/board/board';
 
@@ -28,6 +33,38 @@ const drawBoard: ("w"|"b"|null)[] = [
   "b", "w", "w",
   "b", "w", "b"
 ];
+
+describe("src/core/game canPutDisk tests", () => {
+
+  it("CAN put Disk on empty position", () => {
+    const disks: (Disk|null)[] = convertDisks(initialBoard);
+    const board: Board = { disks };
+    expect(canPutDisk(board, 1)).toBeTruthy();
+  });
+
+  it("CANNOT put Disk on position where a disk already exists", () => {
+    const disks: (Disk|null)[] = convertDisks(initialBoard);
+    disks[1] = Disk.White;
+    const board: Board = { disks };
+    expect(canPutDisk(board, 1)).toBeFalsy();
+  });
+});
+
+describe("src/core/game putDisk tests", () => {
+
+  it("Check put Disk Success", () => {
+    const disks: (Disk|null)[] = convertDisks(initialBoard);
+    const board: Board = { disks };
+    expect(putDisk(board, Disk.White, 1).disks[1]).toBe(Disk.White);
+  });
+
+  it("Check put Disk Failed", () => {
+    const disks: (Disk|null)[] = convertDisks(initialBoard);
+    disks[1] = Disk.White;
+    const board: Board = { disks };
+    expect(() => { putDisk(board, Disk.Black, 1) }).toThrow();
+  });
+});
 
 describe("src/core/game calculateNextPlayer tests", () => {
 

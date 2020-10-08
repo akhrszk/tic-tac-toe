@@ -1,5 +1,6 @@
 import Player from '../domain/player';
 import { Board } from '../features/board/board';
+import Disk from '../domain/disk';
 
 const lines = [
   [0, 1, 2],
@@ -11,6 +12,17 @@ const lines = [
   [0, 4, 8],
   [2, 4, 6],
 ];
+
+export const canPutDisk = (board: Board, position: number): boolean => !board.disks[position]
+
+export const putDisk = (board: Board, disk: Disk, position: number): Board => {
+  if (!canPutDisk(board, position)) {
+    throw Error('can\'t put DISK on this position.');
+  }
+  const disks = board.disks.slice();
+  disks[position] = disk;
+  return { disks };
+};
 
 export const calculateNextPlayer = (currentPlayer: Player, board: Board, players: [Player, Player]): Player|null => {
   const [playerA, playerB] = players;
