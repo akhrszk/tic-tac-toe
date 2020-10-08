@@ -1,21 +1,29 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectHistory } from './historySlice';
-import { Board } from '../board/board';
+import { showBoard } from '../board/boardSlice';
+import { Board, initialBoard } from '../board/board';
 import { Move } from './history';
 
 const MoveList: React.FC = () => {
   const history = useSelector(selectHistory);
+  const dispatch = useDispatch();
 
   const renderStart = () => (
     <li key={0}>
-      <button>Go to game start</button>
+      <button
+        onClick={() => dispatch(showBoard(initialBoard()))}
+      >
+        {'Go to game start'}
+      </button>
     </li>
   );
 
   const renderMove = (step: number, move: Move, board: Board) => (
     <li key={step}>
-      <button>
+      <button
+        onClick={() => dispatch(showBoard(board))}
+      >
         {`Go to move #${step}`}
       </button>
     </li>

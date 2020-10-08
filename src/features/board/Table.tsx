@@ -4,16 +4,20 @@ import styles from './Board.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectBoard, putDisk } from './boardSlice';
 import { nextTurn, selectNextPlayer } from '../status/statusSlice';
-import { addHistory } from '../history/historySlice';
+import { addHistory, selectHistory } from '../history/historySlice';
 
 const Table: React.FC = () => {
   const board = useSelector(selectBoard);
   const nextPlayer = useSelector(selectNextPlayer);
-  const dispatch = useDispatch()
+  const history = useSelector(selectHistory);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(nextTurn(board));
-  }, [board, dispatch]);
+    if (history.length) {
+      const { board, move } = history.slice(-1)[0];
+      dispatch(nextTurn({ board, move }));
+    }
+  }, [history, dispatch]);
 
   const renderCell = (i: number) => (
     <Cell

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initialBoard } from "./board";
+import { initialBoard, Board } from "./board";
 import { RootState } from "../../app/store";
 import { Move } from "../history/history";
 
@@ -15,11 +15,14 @@ export const boardSlice = createSlice({
         return;
       }
       state.disks[position] = player.disk;
+    },
+    showBoard: (state, action: PayloadAction<Board>) => {
+      state.disks = action.payload.disks;
     }
   }
 });
 
-export const { putDisk } = boardSlice.actions;
+export const { putDisk, showBoard } = boardSlice.actions;
 
 export const selectBoard = (state: RootState) => state.board;
 

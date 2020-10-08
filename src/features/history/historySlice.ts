@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { History, Move } from "./history";
-import { initialBoard } from "../board/board";
+import { initialBoard, Board } from "../board/board";
 
 const initialState: History[] = [];
 
@@ -11,8 +11,8 @@ export const historySlice = createSlice({
   reducers: {
     addHistory: (state, action: PayloadAction<Move>) => {
       const move = action.payload;
-      const board = state.length ?
-        state.slice(-1)[0].board : initialBoard();
+      const board: Board = state.length ?
+        { disks: state.slice(-1)[0].board.disks.slice() } : initialBoard();
       if (board.disks[move.position]) {
         return;
       }

@@ -20,7 +20,7 @@ export const calculateNextPlayer = (currentPlayer: Player, board: Board, players
   if (!board.disks.includes(null)) {
     return null;
   }
-  return currentPlayer.disk === playerA.disk ? playerB : playerA;
+  return currentPlayer === playerA ? playerB : playerA;
 };
 
 export const calculateWinner = (board: Board, players: [Player, Player]): Player|null => {

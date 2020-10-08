@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Player from "../../domain/player";
 import Disk from "../../domain/disk";
-import { Board } from "../board/board";
 import { calculateNextPlayer, calculateWinner } from "../../core/game";
 import { RootState } from "../../app/store";
+import { Move } from "../history/history";
+import { Board } from "../board/board";
 
 interface State {
   nextPlayer: Player|null;
@@ -23,15 +24,10 @@ export const statusSlice = createSlice({
   name: 'status',
   initialState,
   reducers: {
-    nextTurn: (state, action: PayloadAction<Board>) => {
-      const board = action.payload;
-      const player = state.nextPlayer;
-      if (player) {
-        state.nextPlayer =
-          calculateNextPlayer(player, board, players);
-        state.winner =
-          calculateWinner(board, players);
-      }
+    nextTurn: (state, action: PayloadAction<{ board: Board, move: Move }>) => {
+      const { board, move } = action.payload;
+      state.nextPlayer = calculateNextPlayer(move.player, board, players);
+      state.winner = calculateWinner(board, players);
     }
   }
 });
