@@ -4,6 +4,7 @@ import styles from './Board.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectBoard, putDisk } from './boardSlice';
 import { nextTurn, selectNextPlayer } from '../status/statusSlice';
+import { addHistory } from '../history/historySlice';
 
 const Table: React.FC = () => {
   const board = useSelector(selectBoard);
@@ -21,6 +22,7 @@ const Table: React.FC = () => {
       onClick={i => {
         if (nextPlayer) {
           dispatch(putDisk({ player: nextPlayer, position: i}));
+          dispatch(addHistory({ player: nextPlayer, position: i}));
         }
       }}
     />

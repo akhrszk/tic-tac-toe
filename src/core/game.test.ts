@@ -1,7 +1,7 @@
 import { calculateNextPlayer, calculateWinner } from './game'
 import Player from '../domain/player'
 import Disk from '../domain/disk';
-import { Board } from '../features/board/boardSlice';
+import { Board } from '../features/board/board';
 
 const playerA: Player = { disk: Disk.White };
 const playerB: Player = { disk: Disk.Black };

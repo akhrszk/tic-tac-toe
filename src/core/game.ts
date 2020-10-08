@@ -1,5 +1,5 @@
 import Player from '../domain/player';
-import { Board } from '../features/board/boardSlice';
+import { Board } from '../features/board/board';
 
 const lines = [
   [0, 1, 2],

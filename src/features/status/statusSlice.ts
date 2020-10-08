@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Player from "../../domain/player";
 import Disk from "../../domain/disk";
-import { Board } from "../board/boardSlice";
+import { Board } from "../board/board";
 import { calculateNextPlayer, calculateWinner } from "../../core/game";
 import { RootState } from "../../app/store";
 
@@ -26,7 +26,6 @@ export const statusSlice = createSlice({
     nextTurn: (state, action: PayloadAction<Board>) => {
       const board = action.payload;
       const player = state.nextPlayer;
-      console.log(`player: ${player?.disk}`);
       if (player) {
         state.nextPlayer =
           calculateNextPlayer(player, board, players);

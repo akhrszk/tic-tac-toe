@@ -1,21 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import Disk from "../../domain/disk";
-import Player from "../../domain/player";
+import { initialBoard } from "./board";
 import { RootState } from "../../app/store";
+import { Move } from "../history/history";
 
-export interface Board {
-  disks: (Disk|null)[];
-}
-
-const initialBoard: Board = {
-  disks: Array<Disk|null>(9).fill(null)
-};
+const initialState = initialBoard();
 
 export const boardSlice = createSlice({
   name: 'board',
-  initialState: initialBoard,
+  initialState,
   reducers: {
-    putDisk: (state, action: PayloadAction<{ player: Player, position: number }>) => {
+    putDisk: (state, action: PayloadAction<Move>) => {
       const { player, position } = action.payload;
       if (state.disks[position]) {
         return;
