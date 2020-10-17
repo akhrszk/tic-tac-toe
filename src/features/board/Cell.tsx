@@ -1,17 +1,17 @@
 import React from 'react';
-import Disk from '../../domain/disk';
 import styles from './Board.module.css';
+import Mark from '../../domain/mark';
 
-const Cell: React.FC<{ i: number, disk: Disk|null, onClick: (i: number) => void }> = ({
+const Cell: React.FC<{ i: number, mark: Mark|null, onClick: (i: number) => void }> = ({
   i,
-  disk = null,
+  mark = null,
   onClick
 }) => (
   <button
     className={styles.cell}
     onClick={() => onClick(i)}
   >
-    {disk}
+    {mark}
   </button>
 );
 

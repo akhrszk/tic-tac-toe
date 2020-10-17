@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Cell from './Cell';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectBoard, putDisk } from './boardSlice';
+import { selectBoard, putMark } from './boardSlice';
 import { nextTurn, selectNextPlayer, selectMoveStep, selectFocusedMoveStep } from '../status/statusSlice';
 import { addHistory, selectHistory } from '../history/historySlice';
 import Player from '../../domain/player';
@@ -36,12 +36,12 @@ const Table: React.FC = () => {
   const renderCell = (i: number) => (
     <Cell
       i={i}
-      disk={board.disks[i]}
+      mark={board.marks[i]}
       onClick={i => {
         const move = history.length ? history.slice(-1)[0].move : null;
         if (nextPlayer && (move?.step || 0) === focusedMoveStep) {
           const move = createMove(nextPlayer, i);
-          dispatch(putDisk(move));
+          dispatch(putMark(move));
           dispatch(addHistory(move));
         }
       }}

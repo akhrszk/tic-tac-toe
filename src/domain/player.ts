@@ -1,7 +1,7 @@
-import Disk from "./disk";
+import Mark from "./mark";
 
 interface Player {
-  readonly disk: Disk
+  readonly mark: Mark
 }
 
 export default Player;

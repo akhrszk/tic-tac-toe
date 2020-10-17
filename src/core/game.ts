@@ -1,6 +1,6 @@
 import Player from '../domain/player';
 import { Board } from '../features/board/board';
-import Disk from '../domain/disk';
+import Mark from '../domain/mark';
 
 const lines = [
   [0, 1, 2],
@@ -13,15 +13,15 @@ const lines = [
   [2, 4, 6],
 ];
 
-export const canPutDisk = (board: Board, position: number): boolean => !board.disks[position]
+export const canPutMark = (board: Board, position: number): boolean => !board.marks[position]
 
-export const putDisk = (board: Board, disk: Disk, position: number): Board => {
-  if (!canPutDisk(board, position)) {
-    throw Error('can\'t put DISK on this position.');
+export const putMark = (board: Board, mark: Mark, position: number): Board => {
+  if (!canPutMark(board, position)) {
+    throw Error('can\'t put Mark on this position.');
   }
-  const disks = board.disks.slice();
-  disks[position] = disk;
-  return { disks };
+  const marks = board.marks.slice();
+  marks[position] = mark;
+  return { marks };
 };
 
 export const calculateNextPlayer = (currentPlayer: Player, board: Board, players: [Player, Player]): Player|null => {
@@ -29,19 +29,19 @@ export const calculateNextPlayer = (currentPlayer: Player, board: Board, players
   if (calculateWinner(board, players)) {
     return null;
   }
-  if (!board.disks.includes(null)) {
+  if (!board.marks.includes(null)) {
     return null;
   }
   return currentPlayer === playerA ? playerB : playerA;
 };
 
 export const calculateWinner = (board: Board, players: [Player, Player]): Player|null => {
-  const { disks } = board;
+  const { marks } = board;
   const [playerA, playerB] = players;
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
-    if (disks[a] && disks[a] === disks[b] && disks[a] === disks[c]) {
-      return disks[a] === playerA.disk ? playerA : playerB;
+    if (marks[a] && marks[a] === marks[b] && marks[a] === marks[c]) {
+      return marks[a] === playerA.mark ? playerA : playerB;
     }
   }
   return null;

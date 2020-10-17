@@ -1,9 +1,9 @@
-import Disk from "../../domain/disk";
+import Mark from "../../domain/mark";
 
 export interface Board {
-  disks: (Disk|null)[];
+  marks: (Mark|null)[];
 }
 
 export const initialBoard: () => Board = () => ({
-  disks: Array<Disk|null>(9).fill(null)
+  marks: Array<Mark|null>(9).fill(null)
 });

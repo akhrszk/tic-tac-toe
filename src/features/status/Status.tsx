@@ -9,9 +9,9 @@ const Status: React.FC = () => {
   const winner = useSelector(selectWinner);
 
   if (nextPlayer) {
-    return (<div className={styles.status}>Next: {nextPlayer.disk}</div>);
+    return (<div className={styles.status}>Next: {nextPlayer.mark}</div>);
   } else if (winner) {
-    return (<div className={styles.status}>{winner.disk} won</div>);
+    return (<div className={styles.status}>{winner.mark} won</div>);
   } else {
     return (<div className={styles.status}>Draw game.</div>);
   }

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Player from "../../domain/player";
-import Disk from "../../domain/disk";
+import Mark from "../../domain/mark";
 import { calculateNextPlayer, calculateWinner } from "../../core/game";
 import { RootState } from "../../app/store";
 import { Move } from "../history/history";
@@ -12,8 +12,8 @@ interface State {
   focusedMoveStep: number;
 }
 
-export const player1: Player = { disk: Disk.White };
-export const player2: Player = { disk: Disk.Black };
+export const player1: Player = { mark: Mark.Circle };
+export const player2: Player = { mark: Mark.Cross };
 const players: [Player, Player] = [player1, player2];
 
 const initialState: State = {

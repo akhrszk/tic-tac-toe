@@ -1,89 +1,89 @@
 import {
   calculateNextPlayer,
   calculateWinner,
-  canPutDisk,
-  putDisk 
+  canPutMark,
+  putMark,
 } from './game';
 import Player from '../domain/player';
-import Disk from '../domain/disk';
 import { Board } from '../features/board/board';
+import Mark from '../domain/mark';
 
-const playerA: Player = { disk: Disk.White };
-const playerB: Player = { disk: Disk.Black };
+const playerA: Player = { mark: Mark.Circle };
+const playerB: Player = { mark: Mark.Cross };
 const players: [Player, Player] = [playerA, playerB];
 
-const convertDisks = (disks: ("w"|"b"|null)[]): (Disk|null)[] => {
-  return disks.map(v => v === null ? null : v === "w" ? Disk.White : Disk.Black);
+const convertMarks = (marks: ("o"|"x"|null)[]): (Mark|null)[] => {
+  return marks.map(v => v === null ? null : v === "o" ? Mark.Circle : Mark.Cross);
 };
 
-const initialBoard: ("w"|"b"|null)[] = [
+const initialBoard: ("o"|"x"|null)[] = [
   null, null, null,
   null, null, null,
   null, null, null
 ];
 
-const whiteWonBoard: ("w"|"b"|null)[] = [
-  "w", "b", "b",
-  null, "w", "b",
-  null, null, "w"
+const whiteWonBoard: ("o"|"x"|null)[] = [
+  "o", "x", "x",
+  null, "o", "x",
+  null, null, "o"
 ];
 
-const drawBoard: ("w"|"b"|null)[] = [
-  "w", "b", "w",
-  "b", "w", "w",
-  "b", "w", "b"
+const drawBoard: ("o"|"x"|null)[] = [
+  "o", "x", "o",
+  "x", "o", "o",
+  "x", "o", "x"
 ];
 
-describe("src/core/game canPutDisk tests", () => {
+describe("src/core/game canPutMark tests", () => {
 
-  it("CAN put Disk on empty position", () => {
-    const disks: (Disk|null)[] = convertDisks(initialBoard);
-    const board: Board = { disks };
-    expect(canPutDisk(board, 1)).toBeTruthy();
+  it("CAN put Mark on empty position", () => {
+    const marks: (Mark|null)[] = convertMarks(initialBoard);
+    const board: Board = { marks };
+    expect(canPutMark(board, 1)).toBeTruthy();
   });
 
-  it("CANNOT put Disk on position where a disk already exists", () => {
-    const disks: (Disk|null)[] = convertDisks(initialBoard);
-    disks[1] = Disk.White;
-    const board: Board = { disks };
-    expect(canPutDisk(board, 1)).toBeFalsy();
+  it("CANNOT put Mark on position where a mark already exists", () => {
+    const marks: (Mark|null)[] = convertMarks(initialBoard);
+    marks[1] = Mark.Circle;
+    const board: Board = { marks };
+    expect(canPutMark(board, 1)).toBeFalsy();
   });
 });
 
-describe("src/core/game putDisk tests", () => {
+describe("src/core/game putMark tests", () => {
 
-  it("Check put Disk Success", () => {
-    const disks: (Disk|null)[] = convertDisks(initialBoard);
-    const board: Board = { disks };
-    expect(putDisk(board, Disk.White, 1).disks[1]).toBe(Disk.White);
+  it("Check put Mark Success", () => {
+    const marks: (Mark|null)[] = convertMarks(initialBoard);
+    const board: Board = { marks };
+    expect(putMark(board, Mark.Circle, 1).marks[1]).toBe(Mark.Circle);
   });
 
-  it("Check put Disk Failed", () => {
-    const disks: (Disk|null)[] = convertDisks(initialBoard);
-    disks[1] = Disk.White;
-    const board: Board = { disks };
-    expect(() => { putDisk(board, Disk.Black, 1) }).toThrow();
+  it("Check put Mark Failed", () => {
+    const marks: (Mark|null)[] = convertMarks(initialBoard);
+    marks[1] = Mark.Circle;
+    const board: Board = { marks };
+    expect(() => { putMark(board, Mark.Cross, 1) }).toThrow();
   });
 });
 
 describe("src/core/game calculateNextPlayer tests", () => {
 
   it("Next Player when NOT finished game", () => {
-    const disks: (Disk|null)[] = convertDisks(initialBoard);
-    disks[1] = playerA.disk;
-    const board: Board = { disks };
+    const marks: (Mark|null)[] = convertMarks(initialBoard);
+    marks[1] = playerA.mark;
+    const board: Board = { marks };
     expect(calculateNextPlayer(playerA, board, players)).toBe(playerB);
   });
 
   it("Next Player is null when decided game", () => {
-    const disks: (Disk|null)[] = convertDisks(whiteWonBoard);
-    const board: Board = { disks };
+    const marks: (Mark|null)[] = convertMarks(whiteWonBoard);
+    const board: Board = { marks };
     expect(calculateNextPlayer(playerA, board, players)).toBeNull();
   });
 
   it("Next Player is null when draw", () => {
-    const disks: (Disk|null)[] = convertDisks(drawBoard);
-    const board: Board = { disks };
+    const marks: (Mark|null)[] = convertMarks(drawBoard);
+    const board: Board = { marks };
     expect(calculateNextPlayer(playerB, board, players)).toBeNull();
   });
 });
@@ -91,20 +91,20 @@ describe("src/core/game calculateNextPlayer tests", () => {
 describe("src/core/game calculateWinner tests", () => {
 
   it("Non Winner when NOT finished game", () => {
-    const disks: (Disk|null)[] = convertDisks(initialBoard);
-    const board: Board = { disks };
+    const marks: (Mark|null)[] = convertMarks(initialBoard);
+    const board: Board = { marks };
     expect(calculateWinner(board, players)).toBeNull();
   });
 
   it("Winner when WHITE WON game", () => {
-    const disks: (Disk|null)[] = convertDisks(whiteWonBoard);
-    const board: Board = { disks };
+    const marks: (Mark|null)[] = convertMarks(whiteWonBoard);
+    const board: Board = { marks };
     expect(calculateWinner(board, players)).toBe(playerA);
   });
 
   it("Non Winner when DRAW game", () => {
-    const disks: (Disk|null)[] = convertDisks(drawBoard);
-    const board: Board = { disks };
+    const marks: (Mark|null)[] = convertMarks(drawBoard);
+    const board: Board = { marks };
     expect(calculateWinner(board, players)).toBeNull();
   });
 });

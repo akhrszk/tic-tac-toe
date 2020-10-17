@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialBoard, Board } from "./board";
 import { RootState } from "../../app/store";
 import { Move } from "../history/history";
-import { canPutDisk, putDisk as createNewBoard } from "../../core/game";
+import { canPutMark, putMark as createNewBoard } from "../../core/game";
 
 const initialState = initialBoard();
 
@@ -10,20 +10,20 @@ export const boardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    putDisk: (state, action: PayloadAction<Move>) => {
+    putMark: (state, action: PayloadAction<Move>) => {
       const { player, position } = action.payload;
-      if (!canPutDisk(state, position)) {
+      if (!canPutMark(state, position)) {
         return;
       }
-      state.disks = createNewBoard(state, player.disk, position).disks;
+      state.marks = createNewBoard(state, player.mark, position).marks;
     },
     showBoard: (state, action: PayloadAction<Board>) => {
-      state.disks = action.payload.disks;
+      state.marks = action.payload.marks;
     }
   }
 });
 
-export const { putDisk, showBoard } = boardSlice.actions;
+export const { putMark, showBoard } = boardSlice.actions;
 
 export const selectBoard = (state: RootState) => state.board;
 
